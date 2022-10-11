@@ -118,11 +118,11 @@ twxs.cmake
 
 Once they are installed, connect to your WSL distribution using the Remotes browser, located in the left-hand toolbar.
 
-![](img/wsl-remotes.png)
+![](img/wsl-remotes.PNG)
 
 Once you are connected, install your local extensions into the WSL environment by clicking on the cloud icon in the Extensions panel:
 
-![](img/install-local-extensions.png)
+![](img/install-local-extensions.PNG)
 
 You can open a terminal in your WSL distribution through VS Code using ``` Ctrl+` ```
 
@@ -140,7 +140,7 @@ You will have to close and reopen VS Code so that its user session in WSL has th
 
 You'll need to set the PICO_BOARD variable for CMake to know which board you want to compile for. I set this in the settings of the CMake Tools VSCode extension. You can search in VSCode settings for `cmake.configureEnvironment`. The value of the item should be 'adafruit_qtpy_rp2040' (no quotes).
 
-![](img/cmake-environment.png)
+![](img/cmake-environment.PNG)
 
 Now you can follow Chapter 7.2 of the Getting Started guide to build the example with CMake. Once you have this working, you'll probably need to copy the generated .elf file back to Windows to flash it to the board. More on that in the next section.
 
@@ -205,7 +205,7 @@ PS> usbipd wsl attach --busid <BUSID> -d RP2040Dev --auto-attach
 ```
 The output will look similar to:
 
-![](img/watch.png)
+![](img/watch.PNG)
 
 Connect Screen to the device with the following line:
 
@@ -213,7 +213,9 @@ Connect Screen to the device with the following line:
 [me@wsl] $ screen /dev/ttyACM0 115200
 ```
 
-You should see the 
+You should see the output below: 
+
+![](img/output.PNG)
 
 ## Keep It Simple, Stupid!
 As I mentioned in a previous section, my original plan was to use the new trendy Dev Containers to create a portable build environment that could be easily copied between workstations. This may have still been possible if I used Docker, but conflicts arise when Docker and Podman are used in the same environment, and I was unwilling to scrap my current container setup. Podman works well on my computer as a standalone tool, but as [this](https://github.com/containers/podman/issues/15338) GitHub issue explains, there is an error that occurs when VS Code attempts to issue commands to podman. I spend no small amount of time troubleshooting here, which is perhaps why I eventually chose to use the dev container image as the base of my WSL distribution. I even tried to use the Remotes - Containers extension nested inside the WSL VS Code extension (connected to the WSL distribution that podman creates to manage the containers), but this ended up not being possible. Would it have been easier to use the default Ubuntu distribution? Yes, probably, and I even already had it installed. Instead, I tried to create my own image using the Rocky Linux base image published in the Docker registry. This eventually turned out to be a bad idea, as I mentioned earlier, because the cross-compile toolchain package was not available in the Rocky Linux repositories. 
